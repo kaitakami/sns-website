@@ -17,67 +17,12 @@
         "description": "This API endpoint is designed to initialize an outbound call and execute the OTP flow.",
         "parameters": [
           {
-            "name": "insuranceType",
-            "in": "query",
+            "name": "x-api-key",
+            "in": "header",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "paymentAmount",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerName",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "partnerName",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "npsMinValue",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "npsMaxValue",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "period",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "insuranceCompany",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "Your API key"
             }
           }
         ],
@@ -161,6 +106,15 @@
         "description": "This API endpoint is designed to retrieve the details of a specific conversation, including transcriptions, agent rating, and customer confirmation status.",
         "parameters": [
           {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Your API key"
+            }
+          },
+          {
             "name": "conversationId",
             "in": "path",
             "required": true,
@@ -212,6 +166,17 @@
       "post": {
         "summary": "Callback response format",
         "description": "This API endpoint is designed to receive callback data.",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Your API key"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
