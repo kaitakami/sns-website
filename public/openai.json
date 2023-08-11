@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Domu BNP API",
-    "description": "Welcome to the Domu BNP API documentation. Domu, the company behind this API, has designed it specifically for BNP's needs. Our primary objective is to ensure that BNP's team can integrate and utilize our API with ease. This documentation provides a comprehensive guide to help you understand and implement the API effectively.\n",
+    "description": "Welcome to the Domu BNP API documentation. Domu, the company behind this API, has designed it specifically for BNP's needs. Our primary objective is to ensure that BNP's team can integrate and utilize our API with ease. This documentation provides a comprehensive guide to help you understand and implement the API effectively.",
     "version": "1.0.0"
   },
   "servers": [
@@ -13,10 +13,75 @@
   "paths": {
     "/initializecall": {
       "post": {
-        "summary": "Initialize outbound call and execute the OTP flow",
+        "summary": "Initialize Outbound Call",
         "description": "This API endpoint is designed to initialize an outbound call and execute the OTP flow.",
+        "parameters": [
+          {
+            "name": "insuranceType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentAmount",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customerName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "partnerName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "npsMinValue",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "npsMaxValue",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "insuranceCompany",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -56,7 +121,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -66,16 +131,16 @@
                       "type": "object",
                       "properties": {
                         "httpStatusCode": {
-                          "type": "number"
+                          "type": "integer"
                         },
                         "requestId": {
                           "type": "string"
                         },
                         "attempts": {
-                          "type": "number"
+                          "type": "integer"
                         },
                         "totalRetryDelay": {
-                          "type": "number"
+                          "type": "integer"
                         }
                       }
                     },
@@ -87,47 +152,26 @@
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "in": "header",
-            "name": "x-api-key",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Your API key"
-          }
-        ]
+        }
       }
     },
     "/retrieveconversation/{conversationId}": {
       "get": {
-        "summary": "Retrieve details of a specific conversation",
+        "summary": "Retrieve Conversation Details",
         "description": "This API endpoint is designed to retrieve the details of a specific conversation, including transcriptions, agent rating, and customer confirmation status.",
         "parameters": [
           {
-            "in": "path",
             "name": "conversationId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "Contact ID of the conversation"
-          },
-          {
-            "in": "header",
-            "name": "x-api-key",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Your API key"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -137,7 +181,7 @@
                       "type": "string"
                     },
                     "agentRating": {
-                      "type": "number"
+                      "type": "integer"
                     },
                     "customerConfirmation": {
                       "type": "boolean"
@@ -160,6 +204,103 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/callback": {
+      "post": {
+        "summary": "Callback response format",
+        "description": "This API endpoint is designed to receive callback data.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idCardif": {
+                    "type": "string"
+                  },
+                  "requestSummary": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "calls": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "callId": {
+                          "type": "string"
+                        },
+                        "timeStarted": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeFinished": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "callNumber": {
+                          "type": "integer"
+                        },
+                        "callConnected": {
+                          "type": "boolean"
+                        },
+                        "saludo": {
+                          "$ref": "#/components/schemas/Interaction"
+                        },
+                        "autorizacion": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Interaction"
+                          }
+                        },
+                        "calificacion": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Interaction"
+                          }
+                        },
+                        "despedida": {
+                          "$ref": "#/components/schemas/Interaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful callback received"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Interaction": {
+        "type": "object",
+        "properties": {
+          "duracion": {
+            "type": "string"
+          },
+          "nivelConfianza": {
+            "type": "integer"
+          },
+          "inputMethod": {
+            "type": "string",
+            "enum": ["keyboard", "voice"]
+          },
+          "inputResult": {
+            "type": "string"
           }
         }
       }
