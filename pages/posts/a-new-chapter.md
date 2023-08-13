@@ -1,7 +1,7 @@
 ---
 title: Joining Domu
 date: 2023/6/7
-description: After coding alone for 4 years, finally I got a job as a software engineer
+description: After being a self-taught dev for 4 years, I landed my first job as a software engineer.
 tag: experience
 author: You
 ---
